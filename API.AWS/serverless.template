@@ -1,0 +1,63 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "API Minimal con ASP.NET Core en Lambda",
+
+  "Parameters": {
+    "Environment": {
+      "Type": "String",
+      "Default": "Development",
+      "AllowedValues": [ "Development", "Staging", "Production" ],
+      "Description": "Ambiente de despliegue"
+    }
+  },
+
+  "Resources": {
+    "AspNetCoreFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "API.AWS::API.AWS.LambdaEntryPoint::FunctionHandlerAsync",
+        "Runtime": "dotnet8",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "Environment": {
+          "Variables": {
+            "ASPNETCORE_ENVIRONMENT": {
+              "Ref": "Environment"
+            }
+          }
+        },
+        "Events": {
+          "ProxyResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "ANY"
+            }
+          },
+          "RootResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "ANY"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "Outputs": {
+    "ApiURL": {
+      "Description": "URL del API Gateway",
+      "Value": {
+        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+      }
+    }
+  }
+}

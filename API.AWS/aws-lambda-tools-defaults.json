@@ -1,0 +1,20 @@
+{
+  "Information": [
+    "Este archivo contiene valores por defecto para AWS Lambda Tools para Visual Studio.",
+    "Para aprender más: https://github.com/aws/aws-extensions-for-dotnet-cli"
+  ],
+  "profile": "default",
+  "region": "us-east-1",
+  "configuration": "Release",
+  "function-runtime": "dotnet8",
+  "function-memory-size": 512,
+  "function-timeout": 30,
+  "function-handler": "API.AWS",
+  "framework": "net8.0",
+  "function-name": "MiApiMinimal",
+  "package-type": "Zip",
+  "function-role": "arn:aws:iam::TU_ACCOUNT_ID:role/lambda-execution-role",
+  "tracing-mode": "Active",
+  "environment-variables": "",
+  "function-architecture": "x86_64"
+}
